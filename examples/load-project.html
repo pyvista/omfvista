@@ -102,19 +102,19 @@ to download the full example code.</p>
 <span class="kn">import</span><span class="w"> </span><span class="nn">omfvista</span>
 </pre></div>
 </div>
-<p>Load the project into an <a class="reference external" href="https://docs.pyvista.org/api/core/_autosummary/pyvista.MultiBlock.html#pyvista.MultiBlock" title="(in PyVista v0.45.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.MultiBlock</span></code></a> dataset</p>
+<p>Load the project into an <a class="reference external" href="https://docs.pyvista.org/api/core/_autosummary/pyvista.MultiBlock.html#pyvista.MultiBlock" title="(in PyVista v0.46.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.MultiBlock</span></code></a> dataset</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span> <span class="o">=</span> <span class="n">omfvista</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="s2">&quot;../assets/test_file.omf&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">project</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>MultiBlock (0x7ffa3e420700)
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>MultiBlock (0x7fdd53c7a4c0)
   N Blocks:   9
   X Bounds:   4.439e+05, 4.471e+05
   Y Bounds:   4.919e+05, 4.951e+05
   Z Bounds:   2.330e+03, 3.556e+03
 </pre></div>
 </div>
-<p>Once the data is loaded as a <a class="reference external" href="https://docs.pyvista.org/api/core/_autosummary/pyvista.MultiBlock.html#pyvista.MultiBlock" title="(in PyVista v0.45.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.MultiBlock</span></code></a> dataset from
+<p>Once the data is loaded as a <a class="reference external" href="https://docs.pyvista.org/api/core/_autosummary/pyvista.MultiBlock.html#pyvista.MultiBlock" title="(in PyVista v0.46.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyvista.MultiBlock</span></code></a> dataset from
 <code class="docutils literal notranslate"><span class="pre">omfvista</span></code>, then that object can be directly used for interactive 3D
 visualization from <code class="docutils literal notranslate"><span class="pre">pyvista</span></code>:</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
@@ -144,7 +144,7 @@ project:</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">thresh_vol</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>UnstructuredGrid (0x7ffa3c0ccd00)
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>UnstructuredGrid (0x7fdd53c7a3a0)
   N Cells:    92525
   N Points:   107807
   X Bounds:   4.447e+05, 4.457e+05
@@ -175,7 +175,7 @@ project:</p>
 <span class="n">p</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../_images/sphx_glr_load-project_003.png" srcset="../_images/sphx_glr_load-project_003.png" alt="load project" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 7.125 seconds)</p>
+<img src="../_images/sphx_glr_load-project_003.png" srcset="../_images/sphx_glr_load-project_003.png" alt="load project" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 10.491 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-load-project-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../_downloads/ed4f007f47ec2bf2f0941d82d211c728/load-project.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">load-project.ipynb</span></code></a></p>
