@@ -30,13 +30,6 @@ jobs:
           pip install -e .
           pip install -r requirements.txt
       - name: Test
-        run: |
-          pytest -v --cov=omfvista .
-          coverage xml -o coverage.xml
+        run: pytest -v .
       - name: Test notebook
         run: pytest -v --nbval-lax --current-env --disable-warnings Example.ipynb
-      - uses: codecov/codecov-action@v5
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: coverage.xml
-          verbose: true

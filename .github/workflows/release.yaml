@@ -6,20 +6,24 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/omfvista
+    permissions:
+      id-token: write # this permission is mandatory for trusted publishing
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.8"
-      - name: Install dependencies
+          python-version: "3.12"
+      - name: Install build
         run: |
           python -m pip install --upgrade pip
-          pip install setuptools wheel twine
-      - name: Build and Publish to PyPI
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-        run: |
-          python setup.py sdist bdist_wheel
-          twine upload --skip-existing dist/*
+          pip install build
+      - name: Build package
+        run: python -m build
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
