@@ -86,8 +86,6 @@
 <h1>Open Mining Format: PyVista (VTK) Interface<a class="headerlink" href="#open-mining-format-pyvista-vtk-interface" title="Link to this heading"></a></h1>
 <a class="reference external image-reference" href="https://pypi.org/project/omfvista/"><img alt="PyPI" src="https://img.shields.io/pypi/v/omfvista.svg?logo=python&amp;logoColor=white" />
 </a>
-<a class="reference external image-reference" href="https://codecov.io/gh/OpenGeoVis/omfvista"><img alt="https://codecov.io/gh/OpenGeoVis/omfvista/branch/master/graph/badge.svg" src="https://codecov.io/gh/OpenGeoVis/omfvista/branch/master/graph/badge.svg" />
-</a>
 <a class="reference external image-reference" href="https://github.com/OpenGeoVis/omfvista"><img alt="GitHub" src="https://img.shields.io/github/stars/OpenGeoVis/omfvista.svg?style=social&amp;label=Stars" />
 </a>
 <p>A PyVista (and VTK) interface for the <a class="reference external" href="https://omf.readthedocs.io/en/latest/">Open Mining Format package</a> (<code class="docutils literal notranslate"><span class="pre">omf</span></code>)
@@ -126,7 +124,7 @@ Here’s an example using the sample data hosted in the <a class="reference exte
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pv</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">omfvista</span>
 
-<span class="n">project</span> <span class="o">=</span> <span class="n">omfvista</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="s1">&#39;test_file.omf&#39;</span><span class="p">)</span>
+<span class="n">project</span> <span class="o">=</span> <span class="n">omfvista</span><span class="o">.</span><span class="n">load_project</span><span class="p">(</span><span class="s1">'test_file.omf'</span><span class="p">)</span>
 <span class="n">project</span>
 </pre></div>
 </div>
@@ -139,10 +137,10 @@ that object can be directly used for interactive 3D visualization from <a class=
 <p>An interactive scene can be created and manipulated to create a compelling
 figure. First, grab the elements from the project:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Grab a few elements of interest and plot em up!</span>
-<span class="n">vol</span> <span class="o">=</span> <span class="n">project</span><span class="p">[</span><span class="s1">&#39;Block Model&#39;</span><span class="p">]</span>
-<span class="n">assay</span> <span class="o">=</span> <span class="n">project</span><span class="p">[</span><span class="s1">&#39;wolfpass_WP_assay&#39;</span><span class="p">]</span>
-<span class="n">topo</span> <span class="o">=</span> <span class="n">project</span><span class="p">[</span><span class="s1">&#39;Topography&#39;</span><span class="p">]</span>
-<span class="n">dacite</span> <span class="o">=</span> <span class="n">project</span><span class="p">[</span><span class="s1">&#39;Dacite&#39;</span><span class="p">]</span>
+<span class="n">vol</span> <span class="o">=</span> <span class="n">project</span><span class="p">[</span><span class="s1">'Block Model'</span><span class="p">]</span>
+<span class="n">assay</span> <span class="o">=</span> <span class="n">project</span><span class="p">[</span><span class="s1">'wolfpass_WP_assay'</span><span class="p">]</span>
+<span class="n">topo</span> <span class="o">=</span> <span class="n">project</span><span class="p">[</span><span class="s1">'Topography'</span><span class="p">]</span>
+<span class="n">dacite</span> <span class="o">=</span> <span class="n">project</span><span class="p">[</span><span class="s1">'Dacite'</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>Then create a 3D scene with these spatial data and apply a filtering tool from
@@ -150,9 +148,9 @@ figure. First, grab the elements from the project:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a plotting window</span>
 <span class="n">p</span> <span class="o">=</span> <span class="n">pv</span><span class="o">.</span><span class="n">Plotter</span><span class="p">(</span><span class="n">notebook</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="c1"># Add our datasets</span>
-<span class="n">p</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">topo</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gist_earth&#39;</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">p</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">assay</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">p</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">dacite</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">topo</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'gist_earth'</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">assay</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'blue'</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">add_mesh</span><span class="p">(</span><span class="n">dacite</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'yellow'</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
 <span class="c1"># Add the volumetric dataset with a thresholding tool</span>
 <span class="n">p</span><span class="o">.</span><span class="n">add_mesh_threshold</span><span class="p">(</span><span class="n">vol</span><span class="p">)</span>
 <span class="c1"># Add the bounds axis</span>

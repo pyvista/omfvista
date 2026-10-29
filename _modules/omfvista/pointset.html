@@ -82,14 +82,14 @@
            <div itemprop="articleBody">
              
   <h1>Source code for omfvista.pointset</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Methods to convert point set objects to VTK data objects&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""Methods to convert point set objects to VTK data objects"""</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;point_set_to_vtk&quot;</span><span class="p">,</span>
+    <span class="s2">"point_set_to_vtk"</span><span class="p">,</span>
 <span class="p">]</span>
 
-<span class="n">__displayname__</span> <span class="o">=</span> <span class="s2">&quot;Point Set&quot;</span>
+<span class="n">__displayname__</span> <span class="o">=</span> <span class="s2">"Point Set"</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span>
@@ -100,14 +100,14 @@
 <div class="viewcode-block" id="point_set_to_vtk">
 <a class="viewcode-back" href="../../content/omfvista/pointset.html#omfvista.pointset.point_set_to_vtk">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">point_set_to_vtk</span><span class="p">(</span><span class="n">pse</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert the point set to a :class:`pyvista.PolyData` data object.</span>
+<span class="w">    </span><span class="sd">"""Convert the point set to a :class:`pyvista.PolyData` data object.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        pse (:class:`omf.pointset.PointSetElement`): The point set to convert</span>
 
 <span class="sd">    Return:</span>
 <span class="sd">        :class:`pyvista.PolyData`</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pse</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">vertices</span><span class="p">)</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">PolyData</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
 
@@ -121,7 +121,7 @@
 
 
 
-<span class="n">point_set_to_vtk</span><span class="o">.</span><span class="n">__displayname__</span> <span class="o">=</span> <span class="s2">&quot;Point Set to VTK&quot;</span>
+<span class="n">point_set_to_vtk</span><span class="o">.</span><span class="n">__displayname__</span> <span class="o">=</span> <span class="s2">"Point Set to VTK"</span>
 </pre></div>
 
            </div>

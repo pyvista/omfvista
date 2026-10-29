@@ -82,16 +82,16 @@
            <div itemprop="articleBody">
              
   <h1>Source code for omfvista.surface</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Methods to convert surface objects to VTK data objects&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""Methods to convert surface objects to VTK data objects"""</span>
 
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;surface_geom_to_vtk&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;surface_grid_geom_to_vtk&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;surface_to_vtk&quot;</span><span class="p">,</span>
+    <span class="s2">"surface_geom_to_vtk"</span><span class="p">,</span>
+    <span class="s2">"surface_grid_geom_to_vtk"</span><span class="p">,</span>
+    <span class="s2">"surface_to_vtk"</span><span class="p">,</span>
 <span class="p">]</span>
 
-<span class="n">__displayname__</span> <span class="o">=</span> <span class="s2">&quot;Surface&quot;</span>
+<span class="n">__displayname__</span> <span class="o">=</span> <span class="s2">"Surface"</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">omf</span>
@@ -103,13 +103,13 @@
 <div class="viewcode-block" id="surface_geom_to_vtk">
 <a class="viewcode-back" href="../../content/omfvista/surface.html#omfvista.surface.surface_geom_to_vtk">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">surface_geom_to_vtk</span><span class="p">(</span><span class="n">surfgeom</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert the triangulated surface to a :class:`pyvista.PolyData`</span>
+<span class="w">    </span><span class="sd">"""Convert the triangulated surface to a :class:`pyvista.PolyData`</span>
 <span class="sd">    object</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        surfgeom (:class:`omf.surface.SurfaceGeometry`): the surface geomotry to</span>
 <span class="sd">            convert</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">pts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">surfgeom</span><span class="o">.</span><span class="n">vertices</span><span class="p">)</span>
     <span class="n">tris</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">surfgeom</span><span class="o">.</span><span class="n">triangles</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
     <span class="n">faces</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tris</span><span class="p">),</span> <span class="mi">3</span><span class="p">),</span> <span class="n">tris</span><span class="p">]</span>
@@ -122,20 +122,20 @@
 <div class="viewcode-block" id="surface_grid_geom_to_vtk">
 <a class="viewcode-back" href="../../content/omfvista/surface.html#omfvista.surface.surface_grid_geom_to_vtk">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">surface_grid_geom_to_vtk</span><span class="p">(</span><span class="n">surfgridgeom</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert the 2D grid to a :class:`pyvista.StructuredGrid` object.</span>
+<span class="w">    </span><span class="sd">"""Convert the 2D grid to a :class:`pyvista.StructuredGrid` object.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        surfgridgeom (:class:`omf.surface.SurfaceGridGeometry`): the surface</span>
 <span class="sd">            grid geometry to convert</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">surfgridgeom</span><span class="o">.</span><span class="n">_validate_mesh</span><span class="p">()</span>
 
     <span class="n">axis_u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">surfgridgeom</span><span class="o">.</span><span class="n">axis_u</span><span class="p">)</span>
     <span class="n">axis_v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">surfgridgeom</span><span class="o">.</span><span class="n">axis_v</span><span class="p">)</span>
     <span class="n">axis_w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">axis_u</span><span class="p">,</span> <span class="n">axis_v</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">check_orthogonal</span><span class="p">(</span><span class="n">axis_u</span><span class="p">,</span> <span class="n">axis_v</span><span class="p">,</span> <span class="n">axis_w</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;axis_u, axis_v, and axis_w must be orthogonal&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"axis_u, axis_v, and axis_w must be orthogonal"</span><span class="p">)</span>
     <span class="n">rotation_mtx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">axis_u</span><span class="p">,</span> <span class="n">axis_v</span><span class="p">,</span> <span class="n">axis_w</span><span class="p">])</span>
     <span class="n">ox</span><span class="p">,</span> <span class="n">oy</span><span class="p">,</span> <span class="n">oz</span> <span class="o">=</span> <span class="n">surfgridgeom</span><span class="o">.</span><span class="n">origin</span>
 
@@ -148,15 +148,15 @@
     <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">oz</span><span class="p">])</span>
 
     <span class="c1"># Build out all nodes in the mesh</span>
-    <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">zz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+    <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">zz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
     <span class="p">(</span>
         <span class="n">xx</span><span class="p">,</span>
         <span class="n">yy</span><span class="p">,</span>
         <span class="n">zz</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">&quot;F&quot;</span><span class="p">),</span>
-        <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">&quot;F&quot;</span><span class="p">),</span>
-        <span class="n">zz</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">&quot;F&quot;</span><span class="p">),</span>
+        <span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">"F"</span><span class="p">),</span>
+        <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">"F"</span><span class="p">),</span>
+        <span class="n">zz</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">"F"</span><span class="p">),</span>
     <span class="p">)</span>
     <span class="n">zz</span> <span class="o">+=</span> <span class="n">surfgridgeom</span><span class="o">.</span><span class="n">offset_w</span>
     <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">zz</span><span class="p">]</span>
@@ -177,12 +177,12 @@
 <div class="viewcode-block" id="surface_to_vtk">
 <a class="viewcode-back" href="../../content/omfvista/surface.html#omfvista.surface.surface_to_vtk">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">surface_to_vtk</span><span class="p">(</span><span class="n">surfel</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert the surface to a its appropriate VTK data object type.</span>
+<span class="w">    </span><span class="sd">"""Convert the surface to a its appropriate VTK data object type.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        surfel (:class:`omf.surface.SurfaceElement`): the surface element to</span>
 <span class="sd">            convert</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="n">geom</span> <span class="o">=</span> <span class="n">surfel</span><span class="o">.</span><span class="n">geometry</span>
 
@@ -202,9 +202,9 @@
 
 
 
-<span class="n">surface_to_vtk</span><span class="o">.</span><span class="n">__displayname__</span> <span class="o">=</span> <span class="s2">&quot;Surface to VTK&quot;</span>
-<span class="n">surface_grid_geom_to_vtk</span><span class="o">.</span><span class="n">__displayname__</span> <span class="o">=</span> <span class="s2">&quot;Surface Grid Geometry to VTK&quot;</span>
-<span class="n">surface_geom_to_vtk</span><span class="o">.</span><span class="n">__displayname__</span> <span class="o">=</span> <span class="s2">&quot;Surface Geometry to VTK&quot;</span>
+<span class="n">surface_to_vtk</span><span class="o">.</span><span class="n">__displayname__</span> <span class="o">=</span> <span class="s2">"Surface to VTK"</span>
+<span class="n">surface_grid_geom_to_vtk</span><span class="o">.</span><span class="n">__displayname__</span> <span class="o">=</span> <span class="s2">"Surface Grid Geometry to VTK"</span>
+<span class="n">surface_geom_to_vtk</span><span class="o">.</span><span class="n">__displayname__</span> <span class="o">=</span> <span class="s2">"Surface Geometry to VTK"</span>
 </pre></div>
 
            </div>

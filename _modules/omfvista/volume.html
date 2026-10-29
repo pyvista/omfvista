@@ -82,15 +82,15 @@
            <div itemprop="articleBody">
              
   <h1>Source code for omfvista.volume</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Methods for converting volumetric data objects&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""Methods for converting volumetric data objects"""</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;get_volume_shape&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;volume_grid_geom_to_vtk&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;volume_to_vtk&quot;</span><span class="p">,</span>
+    <span class="s2">"get_volume_shape"</span><span class="p">,</span>
+    <span class="s2">"volume_grid_geom_to_vtk"</span><span class="p">,</span>
+    <span class="s2">"volume_to_vtk"</span><span class="p">,</span>
 <span class="p">]</span>
 
-<span class="n">__displayname__</span> <span class="o">=</span> <span class="s2">&quot;Volume&quot;</span>
+<span class="n">__displayname__</span> <span class="o">=</span> <span class="s2">"Volume"</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span>
@@ -101,7 +101,7 @@
 <div class="viewcode-block" id="get_volume_shape">
 <a class="viewcode-back" href="../../content/omfvista/volume.html#omfvista.volume.get_volume_shape">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_volume_shape</span><span class="p">(</span><span class="n">vol</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns the shape of a gridded volume&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Returns the shape of a gridded volume"""</span>
     <span class="k">return</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vol</span><span class="o">.</span><span class="n">tensor_u</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">vol</span><span class="o">.</span><span class="n">tensor_v</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">vol</span><span class="o">.</span><span class="n">tensor_w</span><span class="p">))</span></div>
 
 
@@ -109,14 +109,14 @@
 <div class="viewcode-block" id="volume_grid_geom_to_vtk">
 <a class="viewcode-back" href="../../content/omfvista/volume.html#omfvista.volume.volume_grid_geom_to_vtk">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">volume_grid_geom_to_vtk</span><span class="p">(</span><span class="n">volgridgeom</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert the 3D gridded volume to a :class:`pyvista.StructuredGrid`</span>
+<span class="w">    </span><span class="sd">"""Convert the 3D gridded volume to a :class:`pyvista.StructuredGrid`</span>
 <span class="sd">    (or a :class:`pyvista.RectilinearGrid` when apprropriate) object contatining</span>
 <span class="sd">    the 2D surface.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        volgridgeom (:class:`omf.volume.VolumeGridGeometry`): the grid geometry</span>
 <span class="sd">            to convert</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">volgridgeom</span><span class="o">.</span><span class="n">_validate_mesh</span><span class="p">()</span>
 
     <span class="n">ox</span><span class="p">,</span> <span class="n">oy</span><span class="p">,</span> <span class="n">oz</span> <span class="o">=</span> <span class="n">volgridgeom</span><span class="o">.</span><span class="n">origin</span>
@@ -135,8 +135,8 @@
 
     <span class="c1"># Otherwise use a vtkStructuredGrid</span>
     <span class="c1"># Build out all nodes in the mesh</span>
-    <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">zz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
-    <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">&quot;F&quot;</span><span class="p">),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">&quot;F&quot;</span><span class="p">),</span> <span class="n">zz</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">&quot;F&quot;</span><span class="p">)]</span>
+    <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">zz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">"F"</span><span class="p">),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">"F"</span><span class="p">),</span> <span class="n">zz</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">"F"</span><span class="p">)]</span>
 
     <span class="c1"># Rotate the points based on the axis orientations</span>
     <span class="n">rotation_mtx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">volgridgeom</span><span class="o">.</span><span class="n">axis_u</span><span class="p">,</span> <span class="n">volgridgeom</span><span class="o">.</span><span class="n">axis_v</span><span class="p">,</span> <span class="n">volgridgeom</span><span class="o">.</span><span class="n">axis_w</span><span class="p">])</span>
@@ -153,28 +153,28 @@
 <div class="viewcode-block" id="volume_to_vtk">
 <a class="viewcode-back" href="../../content/omfvista/volume.html#omfvista.volume.volume_to_vtk">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">volume_to_vtk</span><span class="p">(</span><span class="n">volelement</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert the volume element to a VTK data object.</span>
+<span class="w">    </span><span class="sd">"""Convert the volume element to a VTK data object.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        volelement (:class:`omf.volume.VolumeElement`): The volume element to</span>
 <span class="sd">            convert</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">volume_grid_geom_to_vtk</span><span class="p">(</span><span class="n">volelement</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">origin</span><span class="p">)</span>
     <span class="n">shp</span> <span class="o">=</span> <span class="n">get_volume_shape</span><span class="p">(</span><span class="n">volelement</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
     <span class="c1"># Add data to output</span>
     <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">volelement</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
         <span class="n">arr</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">array</span>
-        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">shp</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">)</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">shp</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="s2">"F"</span><span class="p">)</span>
         <span class="n">output</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span>
     <span class="k">return</span> <span class="n">output</span></div>
 
 
 
 <span class="c1"># Now set up the display names for the docs</span>
-<span class="n">volume_to_vtk</span><span class="o">.</span><span class="n">__displayname__</span> <span class="o">=</span> <span class="s2">&quot;Volume to VTK&quot;</span>
-<span class="n">volume_grid_geom_to_vtk</span><span class="o">.</span><span class="n">__displayname__</span> <span class="o">=</span> <span class="s2">&quot;Volume Grid Geometry to VTK&quot;</span>
-<span class="n">get_volume_shape</span><span class="o">.</span><span class="n">__displayname__</span> <span class="o">=</span> <span class="s2">&quot;Volume Shape&quot;</span>
+<span class="n">volume_to_vtk</span><span class="o">.</span><span class="n">__displayname__</span> <span class="o">=</span> <span class="s2">"Volume to VTK"</span>
+<span class="n">volume_grid_geom_to_vtk</span><span class="o">.</span><span class="n">__displayname__</span> <span class="o">=</span> <span class="s2">"Volume Grid Geometry to VTK"</span>
+<span class="n">get_volume_shape</span><span class="o">.</span><span class="n">__displayname__</span> <span class="o">=</span> <span class="s2">"Volume Shape"</span>
 </pre></div>
 
            </div>
