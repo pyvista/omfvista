@@ -86,15 +86,15 @@
 <h1>Open Mining Format: PyVista (VTK) Interface<a class="headerlink" href="#open-mining-format-pyvista-vtk-interface" title="Link to this heading"></a></h1>
 <a class="reference external image-reference" href="https://pypi.org/project/omfvista/"><img alt="PyPI" src="https://img.shields.io/pypi/v/omfvista.svg?logo=python&amp;logoColor=white" />
 </a>
-<a class="reference external image-reference" href="https://github.com/OpenGeoVis/omfvista"><img alt="GitHub" src="https://img.shields.io/github/stars/OpenGeoVis/omfvista.svg?style=social&amp;label=Stars" />
+<a class="reference external image-reference" href="https://github.com/pyvista/omfvista"><img alt="GitHub" src="https://img.shields.io/github/stars/pyvista/omfvista.svg?style=social&amp;label=Stars" />
 </a>
 <p>A PyVista (and VTK) interface for the <a class="reference external" href="https://omf.readthedocs.io/en/latest/">Open Mining Format package</a> (<code class="docutils literal notranslate"><span class="pre">omf</span></code>)
 providing Python 3D visualization and useable mesh data structures for
 processing datasets in the OMF specification.</p>
-<p>Documentation is hosted at <a class="reference external" href="https://opengeovis.github.io/omfvista/">https://opengeovis.github.io/omfvista/</a></p>
-<p>Check out the <a class="reference external" href="https://nbviewer.jupyter.org/github/OpenGeoVis/omfvista/blob/master/Example.ipynb">Example Notebook</a> on NBViewer! Or
-<a class="reference external" href="https://mybinder.org/v2/gh/OpenGeoVis/omfvista/master?filepath=Example.ipynb">launch the Notebook on MyBinder</a> to run the code yourself!</p>
-<img alt="Integrated Scene" src="https://github.com/OpenGeoVis/omfvista/raw/master/assets/scene.png" />
+<p>Documentation is hosted at <a class="reference external" href="https://pyvista.github.io/omfvista/">https://pyvista.github.io/omfvista/</a></p>
+<p>Check out the <a class="reference external" href="https://nbviewer.jupyter.org/github/pyvista/omfvista/blob/master/Example.ipynb">Example Notebook</a> on NBViewer! Or
+<a class="reference external" href="https://mybinder.org/v2/gh/pyvista/omfvista/master?filepath=Example.ipynb">launch the Notebook on MyBinder</a> to run the code yourself!</p>
+<img alt="Integrated Scene" src="https://github.com/pyvista/omfvista/raw/master/assets/scene.png" />
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
 <p>Installation is simply:</p>
@@ -116,10 +116,10 @@ developers an email. The project support team can be reached at
 </section>
 <section id="example-use">
 <h2>Example Use<a class="headerlink" href="#example-use" title="Link to this heading"></a></h2>
-<a class="reference external image-reference" href="https://mybinder.org/v2/gh/OpenGeoVis/omfvista/master?filepath=Example.ipynb"><img alt="https://mybinder.org/badge_logo.svg" src="https://mybinder.org/badge_logo.svg" />
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/pyvista/omfvista/master?filepath=Example.ipynb"><img alt="https://mybinder.org/badge_logo.svg" src="https://mybinder.org/badge_logo.svg" />
 </a>
-<p>Be sure to check out the <a class="reference external" href="https://nbviewer.jupyter.org/github/OpenGeoVis/omfvista/blob/master/Example.ipynb">Example Notebook</a> that demos <code class="docutils literal notranslate"><span class="pre">omfvista</span></code> or our
-<a class="reference external" href="https://opengeovis.github.io/omfvista/examples/index.html">Example Gallery</a> in the documentation!
+<p>Be sure to check out the <a class="reference external" href="https://nbviewer.jupyter.org/github/pyvista/omfvista/blob/master/Example.ipynb">Example Notebook</a> that demos <code class="docutils literal notranslate"><span class="pre">omfvista</span></code> or our
+<a class="reference external" href="https://pyvista.github.io/omfvista/examples/index.html">Example Gallery</a> in the documentation!
 Here’s an example using the sample data hosted in the <a class="reference external" href="https://github.com/gmggroup/omf/tree/master/assets">OMF repository</a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pv</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">omfvista</span>
@@ -128,7 +128,7 @@ Here’s an example using the sample data hosted in the <a class="reference exte
 <span class="n">project</span>
 </pre></div>
 </div>
-<img alt="Table Representation" src="https://github.com/OpenGeoVis/omfvista/raw/master/assets/table-repr.png" />
+<img alt="Table Representation" src="https://github.com/pyvista/omfvista/raw/master/assets/table-repr.png" />
 <p>Once the data is loaded as a <code class="docutils literal notranslate"><span class="pre">pyvista.MultiBlock</span></code> dataset from <code class="docutils literal notranslate"><span class="pre">omfvista</span></code>, then
 that object can be directly used for interactive 3D visualization from <a class="reference external" href="https://github.com/pyvista/pyvista">PyVista</a>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">project</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">multi_colors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -160,7 +160,7 @@ figure. First, grab the elements from the project:</p>
 </pre></div>
 </div>
 <figure class="align-default">
-<img alt="Interactive Rendering" src="https://github.com/OpenGeoVis/omfvista/raw/master/assets/interactive.gif" />
+<img alt="Interactive Rendering" src="https://github.com/pyvista/omfvista/raw/master/assets/interactive.gif" />
 </figure>
 <div class="toctree-wrapper compound">
 </div>
