@@ -15,7 +15,7 @@ setuptools.setup(
     description="3D visualization for the Open Mining Format (omf)",
     long_description=long_description,
     long_description_content_type="text/x-rst",
-    url="https://github.com/OpenGeoVis/omfvista",
+    url="https://github.com/pyvista/omfvista",
     packages=setuptools.find_packages(),
     install_requires=[
         "omf>=1.0.0",

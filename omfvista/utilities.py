@@ -58,9 +58,9 @@ def axis_permutation(axis_u, axis_v, axis_w, atol=1e-9):
 def check_orthogonal(axis_u, axis_v, axis_w):
     """Makes sure that the three input vectors are orthogonal"""
     if not (
-        ( np.abs(axis_u.dot(axis_v)) < 1e-6 )
-        and ( np.abs(axis_v.dot(axis_w)) < 1e-6 )
-        and ( np.abs(axis_w.dot(axis_u)) < 1e-6 )
+        (np.abs(axis_u.dot(axis_v)) < 1e-6)
+        and (np.abs(axis_v.dot(axis_w)) < 1e-6)
+        and (np.abs(axis_w.dot(axis_u)) < 1e-6)
     ):
         # raise ValueError('axis_u, axis_v, and axis_w must be orthogonal')
         return False

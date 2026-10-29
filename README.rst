@@ -5,8 +5,8 @@ Open Mining Format: PyVista (VTK) Interface
    :target: https://pypi.org/project/omfvista/
    :alt: PyPI
 
-.. image:: https://img.shields.io/github/stars/OpenGeoVis/omfvista.svg?style=social&label=Stars
-   :target: https://github.com/OpenGeoVis/omfvista
+.. image:: https://img.shields.io/github/stars/pyvista/omfvista.svg?style=social&label=Stars
+   :target: https://github.com/pyvista/omfvista
    :alt: GitHub
 
 
@@ -17,15 +17,15 @@ processing datasets in the OMF specification.
 
 .. _Open Mining Format package: https://omf.readthedocs.io/en/latest/
 
-Documentation is hosted at https://opengeovis.github.io/omfvista/
+Documentation is hosted at https://pyvista.github.io/omfvista/
 
 Check out the `Example Notebook`_ on NBViewer! Or
 `launch the Notebook on MyBinder`_ to run the code yourself!
 
-.. _Example Notebook: https://nbviewer.jupyter.org/github/OpenGeoVis/omfvista/blob/master/Example.ipynb
-.. _launch the Notebook on MyBinder: https://mybinder.org/v2/gh/OpenGeoVis/omfvista/master?filepath=Example.ipynb
+.. _Example Notebook: https://nbviewer.jupyter.org/github/pyvista/omfvista/blob/master/Example.ipynb
+.. _launch the Notebook on MyBinder: https://mybinder.org/v2/gh/pyvista/omfvista/master?filepath=Example.ipynb
 
-.. image:: https://github.com/OpenGeoVis/omfvista/raw/master/assets/scene.png
+.. image:: https://github.com/pyvista/omfvista/raw/master/assets/scene.png
    :alt: Integrated Scene
 
 Installation
@@ -61,13 +61,13 @@ Example Use
 -----------
 
 .. image:: https://mybinder.org/badge_logo.svg
-   :target: https://mybinder.org/v2/gh/OpenGeoVis/omfvista/master?filepath=Example.ipynb
+   :target: https://mybinder.org/v2/gh/pyvista/omfvista/master?filepath=Example.ipynb
 
 Be sure to check out the `Example Notebook`_ that demos ``omfvista`` or our
 `Example Gallery`_ in the documentation!
 Here's an example using the sample data hosted in the `OMF repository`_.
 
-.. _Example Gallery: https://opengeovis.github.io/omfvista/examples/index.html
+.. _Example Gallery: https://pyvista.github.io/omfvista/examples/index.html
 .. _OMF repository: https://github.com/gmggroup/omf/tree/master/assets
 
 .. code-block:: python
@@ -78,7 +78,7 @@ Here's an example using the sample data hosted in the `OMF repository`_.
     project = omfvista.load_project('test_file.omf')
     project
 
-.. image:: https://github.com/OpenGeoVis/omfvista/raw/master/assets/table-repr.png
+.. image:: https://github.com/pyvista/omfvista/raw/master/assets/table-repr.png
    :alt: Table Representation
 
 
@@ -119,5 +119,5 @@ PyVista_ to the volumetric data:
     p.show()
 
 
-.. figure:: https://github.com/OpenGeoVis/omfvista/raw/master/assets/interactive.gif
+.. figure:: https://github.com/pyvista/omfvista/raw/master/assets/interactive.gif
    :alt: Interactive Rendering
