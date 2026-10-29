@@ -137,37 +137,35 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">check_orthogonal</span><span class="p">(</span><span class="n">axis_u</span><span class="p">,</span> <span class="n">axis_v</span><span class="p">,</span> <span class="n">axis_w</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"axis_u, axis_v, and axis_w must be orthogonal"</span><span class="p">)</span>
     <span class="n">rotation_mtx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">axis_u</span><span class="p">,</span> <span class="n">axis_v</span><span class="p">,</span> <span class="n">axis_w</span><span class="p">])</span>
-    <span class="n">ox</span><span class="p">,</span> <span class="n">oy</span><span class="p">,</span> <span class="n">oz</span> <span class="o">=</span> <span class="n">surfgridgeom</span><span class="o">.</span><span class="n">origin</span>
-
-    <span class="c1"># Make coordinates along each axis</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">ox</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">surfgridgeom</span><span class="o">.</span><span class="n">tensor_u</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ox</span><span class="p">)</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">oy</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">surfgridgeom</span><span class="o">.</span><span class="n">tensor_v</span><span class="p">)</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">oy</span><span class="p">)</span>
-
-    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">oz</span><span class="p">])</span>
+    <span class="c1"># Node coordinates in the *local* (u, v, w) frame -- the origin is a</span>
+    <span class="c1"># global-frame translation and must only be applied after the rotation.</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">surfgridgeom</span><span class="o">.</span><span class="n">tensor_u</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">surfgridgeom</span><span class="o">.</span><span class="n">tensor_v</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">])</span>
 
     <span class="c1"># Build out all nodes in the mesh</span>
-    <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">zz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
+    <span class="n">uu</span><span class="p">,</span> <span class="n">vv</span><span class="p">,</span> <span class="n">ww</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
     <span class="p">(</span>
-        <span class="n">xx</span><span class="p">,</span>
-        <span class="n">yy</span><span class="p">,</span>
-        <span class="n">zz</span><span class="p">,</span>
+        <span class="n">uu</span><span class="p">,</span>
+        <span class="n">vv</span><span class="p">,</span>
+        <span class="n">ww</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">"F"</span><span class="p">),</span>
-        <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">"F"</span><span class="p">),</span>
-        <span class="n">zz</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">"F"</span><span class="p">),</span>
+        <span class="n">uu</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">"F"</span><span class="p">),</span>
+        <span class="n">vv</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">"F"</span><span class="p">),</span>
+        <span class="n">ww</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">"F"</span><span class="p">),</span>
     <span class="p">)</span>
-    <span class="n">zz</span> <span class="o">+=</span> <span class="n">surfgridgeom</span><span class="o">.</span><span class="n">offset_w</span>
-    <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">zz</span><span class="p">]</span>
+    <span class="c1"># offset_w is along the local w axis, so it is applied before rotating</span>
+    <span class="n">ww</span> <span class="o">=</span> <span class="n">ww</span> <span class="o">+</span> <span class="n">surfgridgeom</span><span class="o">.</span><span class="n">offset_w</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">uu</span><span class="p">,</span> <span class="n">vv</span><span class="p">,</span> <span class="n">ww</span><span class="p">]</span>
 
-    <span class="c1"># Rotate the points based on the axis orientations</span>
+    <span class="c1"># Rotate the points based on the axis orientations, then translate</span>
     <span class="n">points</span> <span class="o">=</span> <span class="n">points</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">rotation_mtx</span><span class="p">)</span>
+    <span class="n">points</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">surfgridgeom</span><span class="o">.</span><span class="n">origin</span><span class="p">)</span>
 
     <span class="c1"># Now build the output</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">StructuredGrid</span><span class="p">()</span>
     <span class="n">output</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span>
-    <span class="n">output</span><span class="o">.</span><span class="n">dimensions</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">dimensions</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">u</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
 
     <span class="n">output</span><span class="o">.</span><span class="n">points</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">origin</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">output</span></div>

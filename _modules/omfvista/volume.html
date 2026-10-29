@@ -86,6 +86,7 @@
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">"get_volume_shape"</span><span class="p">,</span>
+    <span class="s2">"rectilinear_axes"</span><span class="p">,</span>
     <span class="s2">"volume_grid_geom_to_vtk"</span><span class="p">,</span>
     <span class="s2">"volume_to_vtk"</span><span class="p">,</span>
 <span class="p">]</span>
@@ -95,7 +96,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pyvista</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">omfvista.utilities</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_orientation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">omfvista.utilities</span><span class="w"> </span><span class="kn">import</span> <span class="n">axis_permutation</span>
 
 
 <div class="viewcode-block" id="get_volume_shape">
@@ -103,6 +104,34 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">get_volume_shape</span><span class="p">(</span><span class="n">vol</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">"""Returns the shape of a gridded volume"""</span>
     <span class="k">return</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vol</span><span class="o">.</span><span class="n">tensor_u</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">vol</span><span class="o">.</span><span class="n">tensor_v</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">vol</span><span class="o">.</span><span class="n">tensor_w</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="rectilinear_axes">
+<a class="viewcode-back" href="../../content/omfvista/volume.html#omfvista.volume.rectilinear_axes">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">rectilinear_axes</span><span class="p">(</span><span class="n">volgridgeom</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Global-axis node coordinates for a grid rotated by multiples of 90 degrees.</span>
+
+<span class="sd">    Returns ``(coords, perm, flip)`` -- ascending node coordinates along global</span>
+<span class="sd">    X/Y/Z, the local axis feeding each global axis, and whether it is reversed --</span>
+<span class="sd">    or ``None`` when the grid is obliquely rotated and needs a StructuredGrid.</span>
+<span class="sd">    """</span>
+    <span class="n">found</span> <span class="o">=</span> <span class="n">axis_permutation</span><span class="p">(</span><span class="n">volgridgeom</span><span class="o">.</span><span class="n">axis_u</span><span class="p">,</span> <span class="n">volgridgeom</span><span class="o">.</span><span class="n">axis_v</span><span class="p">,</span> <span class="n">volgridgeom</span><span class="o">.</span><span class="n">axis_w</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">found</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">local2global</span><span class="p">,</span> <span class="n">signs</span> <span class="o">=</span> <span class="n">found</span>
+    <span class="n">grid_origin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">volgridgeom</span><span class="o">.</span><span class="n">origin</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">local</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">volgridgeom</span><span class="p">,</span> <span class="s2">"tensor_"</span> <span class="o">+</span> <span class="n">a</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="s2">"uvw"</span>
+    <span class="p">]</span>
+    <span class="n">coords</span><span class="p">,</span> <span class="n">perm</span><span class="p">,</span> <span class="n">flip</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span>
+    <span class="k">for</span> <span class="n">local_axis</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">global_axis</span><span class="p">,</span> <span class="n">sign</span> <span class="o">=</span> <span class="n">local2global</span><span class="p">[</span><span class="n">local_axis</span><span class="p">],</span> <span class="n">signs</span><span class="p">[</span><span class="n">local_axis</span><span class="p">]</span>
+        <span class="n">coord</span> <span class="o">=</span> <span class="n">grid_origin</span><span class="p">[</span><span class="n">global_axis</span><span class="p">]</span> <span class="o">+</span> <span class="n">sign</span> <span class="o">*</span> <span class="n">local</span><span class="p">[</span><span class="n">local_axis</span><span class="p">]</span>
+        <span class="n">perm</span><span class="p">[</span><span class="n">global_axis</span><span class="p">],</span> <span class="n">flip</span><span class="p">[</span><span class="n">global_axis</span><span class="p">]</span> <span class="o">=</span> <span class="n">local_axis</span><span class="p">,</span> <span class="nb">bool</span><span class="p">(</span><span class="n">sign</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">coords</span><span class="p">[</span><span class="n">global_axis</span><span class="p">]</span> <span class="o">=</span> <span class="n">coord</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">if</span> <span class="n">sign</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">coord</span>
+    <span class="k">return</span> <span class="n">coords</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">perm</span><span class="p">),</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">flip</span><span class="p">)</span></div>
 
 
 
@@ -119,32 +148,34 @@
 <span class="sd">    """</span>
     <span class="n">volgridgeom</span><span class="o">.</span><span class="n">_validate_mesh</span><span class="p">()</span>
 
-    <span class="n">ox</span><span class="p">,</span> <span class="n">oy</span><span class="p">,</span> <span class="n">oz</span> <span class="o">=</span> <span class="n">volgridgeom</span><span class="o">.</span><span class="n">origin</span>
+    <span class="c1"># Node coordinates in the *local* (u, v, w) frame, i.e. not yet offset by</span>
+    <span class="c1"># the geometry origin -- the origin is a global-frame translation and must</span>
+    <span class="c1"># only be applied after the axes have been rotated.</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">volgridgeom</span><span class="o">.</span><span class="n">tensor_u</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">volgridgeom</span><span class="o">.</span><span class="n">tensor_v</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">volgridgeom</span><span class="o">.</span><span class="n">tensor_w</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
 
-    <span class="c1"># Make coordinates along each axis</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">ox</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">volgridgeom</span><span class="o">.</span><span class="n">tensor_u</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ox</span><span class="p">)</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">oy</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">volgridgeom</span><span class="o">.</span><span class="n">tensor_v</span><span class="p">)</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">oy</span><span class="p">)</span>
-    <span class="n">z</span> <span class="o">=</span> <span class="n">oz</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">volgridgeom</span><span class="o">.</span><span class="n">tensor_w</span><span class="p">)</span>
-    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">oz</span><span class="p">)</span>
-
-    <span class="c1"># If axis orientations are standard then use a vtkRectilinearGrid</span>
-    <span class="k">if</span> <span class="n">check_orientation</span><span class="p">(</span><span class="n">volgridgeom</span><span class="o">.</span><span class="n">axis_u</span><span class="p">,</span> <span class="n">volgridgeom</span><span class="o">.</span><span class="n">axis_v</span><span class="p">,</span> <span class="n">volgridgeom</span><span class="o">.</span><span class="n">axis_w</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">RectilinearGrid</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span> <span class="o">+</span> <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">z</span> <span class="o">+</span> <span class="n">origin</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="c1"># A frame rotated by multiples of 90 deg is still rectilinear in the global</span>
+    <span class="c1"># frame, so a vtkRectilinearGrid represents it exactly (and far more cheaply</span>
+    <span class="c1"># than storing every node of a vtkStructuredGrid).</span>
+    <span class="n">rect</span> <span class="o">=</span> <span class="n">rectilinear_axes</span><span class="p">(</span><span class="n">volgridgeom</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">rect</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">zz</span><span class="p">),</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">rect</span>
+        <span class="k">return</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">RectilinearGrid</span><span class="p">(</span><span class="n">xx</span> <span class="o">+</span> <span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">yy</span> <span class="o">+</span> <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">zz</span> <span class="o">+</span> <span class="n">origin</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 
     <span class="c1"># Otherwise use a vtkStructuredGrid</span>
     <span class="c1"># Build out all nodes in the mesh</span>
-    <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">zz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
-    <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">"F"</span><span class="p">),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">"F"</span><span class="p">),</span> <span class="n">zz</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">"F"</span><span class="p">)]</span>
+    <span class="n">uu</span><span class="p">,</span> <span class="n">vv</span><span class="p">,</span> <span class="n">ww</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">"ij"</span><span class="p">)</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">uu</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">"F"</span><span class="p">),</span> <span class="n">vv</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">"F"</span><span class="p">),</span> <span class="n">ww</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="s2">"F"</span><span class="p">)]</span>
 
-    <span class="c1"># Rotate the points based on the axis orientations</span>
+    <span class="c1"># Rotate the points based on the axis orientations, then translate</span>
     <span class="n">rotation_mtx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">volgridgeom</span><span class="o">.</span><span class="n">axis_u</span><span class="p">,</span> <span class="n">volgridgeom</span><span class="o">.</span><span class="n">axis_v</span><span class="p">,</span> <span class="n">volgridgeom</span><span class="o">.</span><span class="n">axis_w</span><span class="p">])</span>
     <span class="n">points</span> <span class="o">=</span> <span class="n">points</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">rotation_mtx</span><span class="p">)</span>
+    <span class="n">points</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">volgridgeom</span><span class="o">.</span><span class="n">origin</span><span class="p">)</span>
 
     <span class="n">output</span> <span class="o">=</span> <span class="n">pyvista</span><span class="o">.</span><span class="n">StructuredGrid</span><span class="p">()</span>
     <span class="n">output</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span>
-    <span class="n">output</span><span class="o">.</span><span class="n">dimensions</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">dimensions</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">u</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
     <span class="n">output</span><span class="o">.</span><span class="n">points</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">origin</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">output</span></div>
 
@@ -162,11 +193,17 @@
 <span class="sd">    """</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">volume_grid_geom_to_vtk</span><span class="p">(</span><span class="n">volelement</span><span class="o">.</span><span class="n">geometry</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">origin</span><span class="p">)</span>
     <span class="n">shp</span> <span class="o">=</span> <span class="n">get_volume_shape</span><span class="p">(</span><span class="n">volelement</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
+    <span class="n">rect</span> <span class="o">=</span> <span class="n">rectilinear_axes</span><span class="p">(</span><span class="n">volelement</span><span class="o">.</span><span class="n">geometry</span><span class="p">)</span>
     <span class="c1"># Add data to output</span>
     <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">volelement</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
-        <span class="n">arr</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">array</span>
-        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">shp</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="s2">"F"</span><span class="p">)</span>
-        <span class="n">output</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">shp</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">rect</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># The grid was re-expressed on global axes, so the cube must follow.</span>
+            <span class="c1"># For an identity frame this is a no-op, matching previous behaviour.</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">perm</span><span class="p">,</span> <span class="n">flip</span> <span class="o">=</span> <span class="n">rect</span>
+            <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">perm</span><span class="p">)</span>
+            <span class="n">arr</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span> <span class="k">else</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">flip</span><span class="p">)]</span>
+        <span class="n">output</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="s2">"F"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">output</span></div>
 
 

@@ -71,6 +71,10 @@
 <li class="toctree-l4"><a class="reference internal" href="#omfvista.utilities.add_texture_coordinates"><code class="docutils literal notranslate"><span class="pre">add_texture_coordinates()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#axis-permutation">axis_permutation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#omfvista.utilities.axis_permutation"><code class="docutils literal notranslate"><span class="pre">axis_permutation()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#check-orientation">check_orientation</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#omfvista.utilities.check_orientation"><code class="docutils literal notranslate"><span class="pre">check_orientation()</span></code></a></li>
 </ul>
@@ -127,6 +131,21 @@
 <dt class="sig sig-object py" id="omfvista.utilities.add_texture_coordinates">
 <span class="sig-prename descclassname"><span class="pre">omfvista.utilities.</span></span><span class="sig-name descname"><span class="pre">add_texture_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">textures</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/omfvista/utilities.html#add_texture_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#omfvista.utilities.add_texture_coordinates" title="Link to this definition"></a></dt>
 <dd><p>Add texture coordinates to a pyvista data object.</p>
+</dd></dl>
+
+</section>
+<section id="axis-permutation">
+<h2>axis_permutation<a class="headerlink" href="#axis-permutation" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="omfvista.utilities.axis_permutation">
+<span class="sig-prename descclassname"><span class="pre">omfvista.utilities.</span></span><span class="sig-name descname"><span class="pre">axis_permutation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis_u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-09</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/omfvista/utilities.html#axis_permutation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#omfvista.utilities.axis_permutation" title="Link to this definition"></a></dt>
+<dd><p>Detect an axis frame that is a rotation by multiples of 90 degrees.</p>
+<p>Such a frame is a signed permutation matrix, which means the grid is still
+rectilinear in the global frame and can be represented exactly by a
+<code class="docutils literal notranslate"><span class="pre">vtkRectilinearGrid</span></code> – no need for a <code class="docutils literal notranslate"><span class="pre">vtkStructuredGrid</span></code>.</p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">(perm,</span> <span class="pre">signs)</span></code>, where <code class="docutils literal notranslate"><span class="pre">perm[i]</span></code> is the global axis that local
+axis <code class="docutils literal notranslate"><span class="pre">i</span></code> (0=u, 1=v, 2=w) maps onto and <code class="docutils literal notranslate"><span class="pre">signs[i]</span></code> is +1/-1, or <code class="docutils literal notranslate"><span class="pre">None</span></code>
+if the frame is obliquely rotated.</p>
 </dd></dl>
 
 </section>

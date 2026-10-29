@@ -68,6 +68,10 @@
 <li class="toctree-l4"><a class="reference internal" href="#omfvista.volume.get_volume_shape"><code class="docutils literal notranslate"><span class="pre">get_volume_shape()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#rectilinear-axes">rectilinear_axes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#omfvista.volume.rectilinear_axes"><code class="docutils literal notranslate"><span class="pre">rectilinear_axes()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#volume-grid-geometry-to-vtk">Volume Grid Geometry to VTK</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#omfvista.volume.volume_grid_geom_to_vtk"><code class="docutils literal notranslate"><span class="pre">volume_grid_geom_to_vtk()</span></code></a></li>
 </ul>
@@ -115,6 +119,18 @@
 <dt class="sig sig-object py" id="omfvista.volume.get_volume_shape">
 <span class="sig-prename descclassname"><span class="pre">omfvista.volume.</span></span><span class="sig-name descname"><span class="pre">get_volume_shape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vol</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/omfvista/volume.html#get_volume_shape"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#omfvista.volume.get_volume_shape" title="Link to this definition"></a></dt>
 <dd><p>Returns the shape of a gridded volume</p>
+</dd></dl>
+
+</section>
+<section id="rectilinear-axes">
+<h2>rectilinear_axes<a class="headerlink" href="#rectilinear-axes" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="omfvista.volume.rectilinear_axes">
+<span class="sig-prename descclassname"><span class="pre">omfvista.volume.</span></span><span class="sig-name descname"><span class="pre">rectilinear_axes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">volgridgeom</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/omfvista/volume.html#rectilinear_axes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#omfvista.volume.rectilinear_axes" title="Link to this definition"></a></dt>
+<dd><p>Global-axis node coordinates for a grid rotated by multiples of 90 degrees.</p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">(coords,</span> <span class="pre">perm,</span> <span class="pre">flip)</span></code> – ascending node coordinates along global
+X/Y/Z, the local axis feeding each global axis, and whether it is reversed –
+or <code class="docutils literal notranslate"><span class="pre">None</span></code> when the grid is obliquely rotated and needs a StructuredGrid.</p>
 </dd></dl>
 
 </section>

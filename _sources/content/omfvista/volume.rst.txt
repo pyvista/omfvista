@@ -15,6 +15,13 @@ Volume Shape
 
 
 
+rectilinear_axes
+----------------
+
+.. autofunction:: omfvista.volume.rectilinear_axes
+
+
+
 Volume Grid Geometry to VTK
 ---------------------------
 
